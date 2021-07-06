@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    active: vault, git
+  cloud:
+    config:
+      server:
+        git:
+          uri: file://usr/config-repo
+          clone-on-start: true
+        vault:
+          port: 8200
+          host: vault
+          scheme: http
+          authentication: TOKEN
+          token: s.7XgH60lSLeRjKdQBZzYpb38C
+          kv-version: 2
+          backend: kv
+server:
+  port: 8888
+

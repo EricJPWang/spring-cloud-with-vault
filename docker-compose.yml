@@ -1,0 +1,53 @@
+version: '3.8'
+services: 
+  vault:
+    container_name: vault
+    image: vault
+    restart: unless-stopped
+    ports: 
+        - 8200:8200
+    volumes: 
+        - ./vault/data:/vault/file
+        - ./vault/config:/vault/config
+    cap_add:
+      - IPC_LOCK
+    entrypoint: vault server -config=/vault/config/vault-config.hcl
+#    entrypoint: vault server -dev
+
+  config-server:
+    container_name: cloud-vault-config-server
+    build: 
+      context: .
+      dockerfile: configServer/Dockerfile
+    ports:
+      - 8888:8888
+    restart: always
+
+  config-client:
+    container_name: cloud-vault-config-client
+    build: 
+      context: configClient
+      dockerfile: Dockerfile
+    ports:
+      - 9000:9000
+    restart: always
+
+  db:
+    container_name: db
+    image: 'postgres:13'
+    restart: always
+    environment:
+      - POSTGRES_DB=user
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=Test2021!
+
+  config-client-db:
+    container_name: cloud-config-client-db
+    build:
+      context: config-client-db
+      dockerfile: Dockerfile
+    ports:
+      - 9001:9001
+    restart: always
+
+

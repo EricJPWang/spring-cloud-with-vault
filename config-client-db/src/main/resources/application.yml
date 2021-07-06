@@ -1,0 +1,24 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: myapp2
+  config:
+    import: optional:configserver:http://config-server:8888
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://db:5432/user
+    driver-class-name: org.postgresql.Driver
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info
+
