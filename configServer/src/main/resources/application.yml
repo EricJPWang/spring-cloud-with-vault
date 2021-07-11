@@ -12,7 +12,7 @@ spring:
           host: vault
           scheme: http
           authentication: TOKEN
-          token: s.7XgH60lSLeRjKdQBZzYpb38C
+          token: s.ICyYYVARI7pHHHQ3FG6yco93
           kv-version: 2
           backend: kv
 server:
